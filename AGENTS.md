@@ -3,7 +3,7 @@
 Guidance for AI coding agents (and humans) working on **Code Block Numbers**, an Obsidian community plugin. General Obsidian plugin learnings live in `C:\Users\DevUser\projects\agents\obsidian-plugins.md`.
 
 - Repo: https://github.com/haderlka/obsidian-code-block-numbers (author `haderlka`, default branch `main`)
-- Donations: `fundingUrl` in `manifest.json` → https://buymeacoffee.com/haderlka, plus the "Support" section in the README (`docs/buymeacoffee.png`). Keep links out of the manifest `description`.
+- Donations: `fundingUrl` in `manifest.json` → https://buymeacoffee.com/haderlka, plus the support block at the **top** of the README: button image `docs/support-button.png` linked to buymeacoffee.com, then a plain text link. The image file name must not contain "buymeacoffee" (the community site removes such images). Keep links out of the manifest `description`.
 - README images and links are **absolute** GitHub URLs (`raw.githubusercontent.com/.../main/docs/`), so they also work in Obsidian's plugin browser.
 
 ## What it does
@@ -31,7 +31,7 @@ Options in the info string of an ordinary fenced code block add a title bar, lin
 | `npm audit` | Must report 0 vulnerabilities (CI runs it). `moment` is pinned via `overrides` because `obsidian` pulls in a vulnerable version. |
 | `npm test` | `node:test` unit tests for `src/fence.ts` |
 | `npm run harness` | Builds the browser test page into `tools/harness/.build/` (serve over http, see `.claude/launch.json`) |
-| `npm run screenshots` | Harness + regenerates `docs/light.png` and `docs/dark.png`. Run after visual changes. |
+| `npm run screenshots` | Harness + regenerates `docs/dark.png` (dark only, the user prefers dark screenshots). Run after visual changes. |
 
 Run `lint`, `test` and `build` after every change.
 
@@ -45,7 +45,7 @@ src/main.ts       Plugin, ReadingDecorator (reading view), Live Preview ViewPlug
 styles.css        All styling, classes prefixed cbn-
 tests/            Unit tests for fence.ts
 tools/harness/    Obsidian shim + note-like page (Prism reading view + real CodeMirror editor)
-docs/             README images (light.png/dark.png generated, buymeacoffee.png)
+docs/             README images (dark.png generated, support-button.png)
 ```
 
 ## Architecture and non-obvious decisions
@@ -62,7 +62,8 @@ docs/             README images (light.png/dark.png generated, buymeacoffee.png)
 
 ## Design decisions (don't reintroduce)
 
-- (none yet)
+- README screenshots are **dark theme only**, and show no copy button. Obsidian only shows it on hover, and the harness does the same.
+- The Buy Me a Coffee button sits at the **top** of the README, under the intro, not in a "Support" section at the end.
 
 ## Testing
 

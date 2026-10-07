@@ -1,0 +1,164 @@
+/* Code Block Numbers
+ *
+ * Reading view: the plugin never touches the <code> element. It adds classes to the <pre>,
+ * a title bar before it, and two overlay layers inside it (.cbn-marks below the code,
+ * .cbn-gutter on the left). Positions come from measuring the rendered text.
+ *
+ * Live Preview: CodeMirror line decorations on the code block's lines.
+ */
+
+body {
+	--cbn-highlight-bg: hsla(var(--interactive-accent-hsl), 0.14);
+	--cbn-highlight-edge: var(--interactive-accent);
+	--cbn-number-color: var(--text-faint);
+	--cbn-number-highlight-color: var(--text-accent);
+	--cbn-separator: var(--background-modifier-border);
+	--cbn-title-color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------- Title bar */
+
+.cbn-title {
+	display: flex;
+	align-items: center;
+	min-width: 0;
+	padding: var(--size-4-1) var(--size-4-4);
+	background-color: var(--code-background);
+	border-bottom: 1px solid var(--cbn-separator);
+	border-radius: var(--code-radius, var(--radius-s)) var(--code-radius, var(--radius-s)) 0 0;
+	color: var(--cbn-title-color);
+	font-family: var(--font-monospace);
+	font-size: var(--font-smaller);
+	line-height: var(--line-height-tight);
+}
+
+.cbn-title-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.markdown-rendered pre.cbn-has-title {
+	margin-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/* ---------------------------------------------------------------- Reading view */
+
+pre.cbn-block {
+	position: relative;
+}
+
+/* Lets the highlight layer (earlier in the DOM) paint below the code text. */
+pre.cbn-block > code {
+	position: relative;
+}
+
+/* Only the code moves right; other content plugins add to the pre (run buttons, output) stays.
+   The doubled class outweighs theme rules like `.markdown-rendered pre code`. */
+pre.cbn-numbered.cbn-numbered > code {
+	display: block;
+	padding-inline-start: var(--cbn-code-indent, 2.5em);
+}
+
+.cbn-gutter {
+	position: absolute;
+	top: 0;
+	height: var(--cbn-gutter-height, 100%);
+	left: var(--cbn-scroll-left, 0px);
+	box-sizing: content-box;
+	width: calc(var(--cbn-digits, 1) * 1ch);
+	padding: 0 var(--size-4-2) 0 var(--size-4-3);
+	border-right: 1px solid var(--cbn-separator);
+	font-family: var(--font-monospace);
+	font-size: var(--cbn-font-size, var(--code-size));
+	pointer-events: none;
+	user-select: none;
+}
+
+.cbn-number {
+	position: absolute;
+	top: var(--cbn-top, 0px);
+	right: var(--size-4-2);
+	line-height: var(--cbn-line-height, 1.5);
+	color: var(--cbn-number-color);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+/* The label is generated content, so selecting and copying the code never includes it. */
+.cbn-number::before {
+	content: attr(data-cbn-n);
+}
+
+.cbn-number.is-highlighted {
+	color: var(--cbn-number-highlight-color);
+}
+
+.cbn-marks {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: var(--cbn-scroll-left, 0px);
+	width: 100%;
+	pointer-events: none;
+}
+
+.cbn-mark {
+	position: absolute;
+	top: var(--cbn-top, 0px);
+	left: 0;
+	right: 0;
+	height: var(--cbn-height, 0px);
+	background-color: var(--cbn-highlight-bg);
+	box-shadow: inset 3px 0 0 var(--cbn-highlight-edge);
+}
+
+/* ---------------------------------------------------------------- Live Preview */
+
+.cbn-d1 { --cbn-digits: 1; }
+.cbn-d2 { --cbn-digits: 2; }
+.cbn-d3 { --cbn-digits: 3; }
+.cbn-d4 { --cbn-digits: 4; }
+.cbn-d5 { --cbn-digits: 5; }
+.cbn-d6 { --cbn-digits: 6; }
+
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-numbered {
+	--cbn-lp-gutter: calc(var(--cbn-digits, 1) * 1ch + var(--size-4-3) + var(--size-4-2));
+	position: relative;
+	padding-inline-start: calc(var(--cbn-lp-gutter) + var(--size-4-3));
+}
+
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-numbered::before {
+	content: attr(data-cbn-n);
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	inset-inline-start: 0;
+	box-sizing: border-box;
+	width: var(--cbn-lp-gutter);
+	padding-inline-end: var(--size-4-2);
+	border-inline-end: 1px solid var(--cbn-separator);
+	color: var(--cbn-number-color);
+	font-variant-numeric: tabular-nums;
+	text-align: end;
+	pointer-events: none;
+	user-select: none;
+}
+
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-highlight {
+	background-image: linear-gradient(var(--cbn-highlight-bg), var(--cbn-highlight-bg));
+	box-shadow: inset 3px 0 0 var(--cbn-highlight-edge);
+}
+
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-numbered.cbn-lp-highlight::before {
+	color: var(--cbn-number-highlight-color);
+}
+
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-title::before {
+	content: attr(data-cbn-title);
+	color: var(--cbn-title-color);
+	font-family: var(--font-monospace);
+	font-size: var(--font-smaller);
+}

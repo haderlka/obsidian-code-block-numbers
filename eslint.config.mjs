@@ -16,6 +16,11 @@ export default defineConfig([
 			},
 		},
 	},
+	// The community scan reports deprecated APIs (e.g. Range.detach); the recommended config doesn't.
+	{
+		files: ["src/**/*.ts"],
+		rules: { "@typescript-eslint/no-deprecated": "error" },
+	},
 	// The review validates manifest.json and LICENSE; the recommended config doesn't reach them.
 	{
 		files: ["manifest.json"],

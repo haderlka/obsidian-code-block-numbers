@@ -4,7 +4,11 @@ Line numbers, a file name and highlighted lines for your code blocks. You write 
 
 **Source code:** [github.com/haderlka/obsidian-code-block-numbers](https://github.com/haderlka/obsidian-code-block-numbers). Issues and ideas are welcome.
 
-![Code blocks with line numbers starting at 10, a file name bar and highlighted lines](https://raw.githubusercontent.com/haderlka/obsidian-code-block-numbers/main/docs/light.png)
+If this plugin is useful to you, you can support its development:
+
+[![Support this plugin](https://raw.githubusercontent.com/haderlka/obsidian-code-block-numbers/main/docs/support-button.png)](https://buymeacoffee.com/haderlka)
+
+![Code blocks with line numbers starting at 10, a file name bar and highlighted lines](https://raw.githubusercontent.com/haderlka/obsidian-code-block-numbers/main/docs/dark.png)
 
 ## Features
 
@@ -63,12 +67,6 @@ Also understood:
 From Obsidian: **Settings → Community plugins → Browse**, search for "Code Block Numbers", install and enable it.
 
 Manually: download `main.js`, `manifest.json` and `styles.css` from the [latest release](https://github.com/haderlka/obsidian-code-block-numbers/releases/latest) into `<vault>/.obsidian/plugins/code-block-numbers/`, then enable the plugin under **Settings → Community plugins**.
-
-## Support
-
-If this plugin is useful to you, you can support its development:
-
-[![Buy me a coffee](https://raw.githubusercontent.com/haderlka/obsidian-code-block-numbers/main/docs/buymeacoffee.png)](https://buymeacoffee.com/haderlka)
 
 ## License
 

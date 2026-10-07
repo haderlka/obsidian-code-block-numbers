@@ -27,10 +27,8 @@ copyFileSync(join(root, "styles.css"), join(build, "styles.css"));
 console.log(`Built ${join(build, "page.html")}`);
 
 if (process.argv.includes("--shoot")) {
-	const SHOTS = [
-		{ name: "light", size: [680, 640], query: "theme=light&only=reading" },
-		{ name: "dark", size: [680, 640], query: "theme=dark&only=reading" },
-	];
+	// The user prefers dark screenshots.
+	const SHOTS = [{ name: "dark", size: [680, 640], query: "theme=dark&only=reading" }];
 	const browser = [
 		process.env.CHROME_PATH,
 		"C:/Program Files/Google/Chrome/Application/chrome.exe",

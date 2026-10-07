@@ -41,7 +41,17 @@ if (manifest.fundingUrl !== COFFEE) fail(`manifest fundingUrl must be ${COFFEE}`
 const readme = existsSync(join(root, "README.md")) ? read("README.md") : "";
 if (!readme) fail("README.md is missing");
 if (!readme.includes(`](${COFFEE})`)) fail("README.md needs the Buy Me a Coffee button");
-if (/cdn\.buymeacoffee\.com/.test(readme)) fail("README images must be hosted in docs/ (the community site drops cdn.buymeacoffee.com)");
+// The community site removes images whose URL contains "buymeacoffee" (also from raw.githubusercontent).
+for (const m of readme.matchAll(/!\[[^\]]*\]\(([^)]+)\)|<img[^>]+src="([^"]+)"/g)) {
+	if (/buymeacoffee/i.test(m[1] ?? m[2])) fail(`README image ${m[1] ?? m[2]} contains "buymeacoffee"; the community site drops it`);
+}
+// The button goes at the top, before the first section heading, with a plain text link as fallback.
+const firstSection = readme.search(/^## /m);
+const top = firstSection === -1 ? readme : readme.slice(0, firstSection);
+if (!top.includes(`](${COFFEE})`)) fail("put the Buy Me a Coffee button at the top of README.md, before the first ## heading");
+if (!/\[[^\]!][^\]]*\]\(https:\/\/buymeacoffee\.com\/haderlka\)/.test(top)) {
+	fail("add a plain text Buy Me a Coffee link under the button (fallback if the image is filtered)");
+}
 if (/!\[[^\]]*\]\((?!https:\/\/)/.test(readme)) fail("README images need absolute URLs");
 if (!existsSync(join(root, "LICENSE"))) fail("LICENSE is missing");
 

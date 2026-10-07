@@ -451,7 +451,6 @@ function measureLines(code: HTMLElement, pre: HTMLElement): Row[] {
 		rows.push({ top: rowTop, height, lineHeight });
 		previousBottom = rowTop + height;
 	}
-	range.detach();
 	return rows;
 }
 
