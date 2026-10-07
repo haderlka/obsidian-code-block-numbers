@@ -3,7 +3,7 @@
 Guidance for AI coding agents (and humans) working on **Code Block Numbers**, an Obsidian community plugin. General Obsidian plugin learnings live in `C:\Users\DevUser\projects\agents\obsidian-plugins.md`.
 
 - Repo: https://github.com/haderlka/obsidian-code-block-numbers (author `haderlka`, default branch `main`)
-- Donations: `fundingUrl` in `manifest.json` → https://buymeacoffee.com/haderlka, plus the support block at the **top** of the README: button image `docs/support-button.png` linked to buymeacoffee.com, then a plain text link. The image file name must not contain "buymeacoffee" (the community site removes such images). Keep links out of the manifest `description`.
+- Donations: `fundingUrl` in `manifest.json` → https://buymeacoffee.com/haderlka, plus the support block at the **top** of the README: button image `docs/support-button.png` linked to buymeacoffee.com (no extra text link — the user removed it). The image file name must not contain "buymeacoffee" (the community site removes such images). Keep links out of the manifest `description`.
 - README images and links are **absolute** GitHub URLs (`raw.githubusercontent.com/.../main/docs/`), so they also work in Obsidian's plugin browser.
 
 ## What it does
@@ -63,7 +63,7 @@ docs/             README images (dark.png generated, support-button.png)
 ## Design decisions (don't reintroduce)
 
 - README screenshots are **dark theme only**, and show no copy button. Obsidian only shows it on hover, and the harness does the same.
-- The Buy Me a Coffee button sits at the **top** of the README, under the intro, not in a "Support" section at the end.
+- The Buy Me a Coffee button sits at the **top** of the README, under the intro, not in a "Support" section at the end. **No** extra plain text coffee link under it (the user removed it).
 
 ## Testing
 
