@@ -1,0 +1,11 @@
+{
+	"id": "code-block-numbers",
+	"name": "Code Block Numbers",
+	"version": "1.0.0",
+	"minAppVersion": "1.4.0",
+	"description": "Add line numbers, a file name and highlighted lines to code blocks without changing how they are highlighted or run.",
+	"author": "haderlka",
+	"authorUrl": "https://github.com/haderlka",
+	"fundingUrl": "https://buymeacoffee.com/haderlka",
+	"isDesktopOnly": false
+}

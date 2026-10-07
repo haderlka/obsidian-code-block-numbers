@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Block Numbers harness</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Obsidian default theme values (approximate) */
+body {
+	--font-monospace: ui-monospace, "Cascadia Mono", Consolas, monospace;
+	--code-size: 0.875em; --font-smaller: 0.875em; --line-height-tight: 1.3;
+	--size-4-1: 4px; --size-4-2: 8px; --size-4-3: 12px; --size-4-4: 16px;
+	--radius-s: 4px; --code-radius: 4px;
+	margin: 0; font-family: "Segoe UI", system-ui, sans-serif; font-size: 16px; line-height: 1.5;
+	background: var(--background-primary); color: var(--text-normal);
+}
+body.theme-light {
+	--interactive-accent: #8a5cf5; --interactive-accent-hsl: 258, 88%, 66%; --text-accent: #8a5cf5;
+	--background-primary: #ffffff; --code-background: #fafafa; --background-modifier-border: #e0e0e0;
+	--text-normal: #222; --text-muted: #5c5c5c; --text-faint: #ababab;
+	--code-comment: #ababab; --code-keyword: #d53984; --code-string: #0c9a9a; --code-function: #bd8e37; --code-normal: #5c5c5c;
+}
+body.theme-dark {
+	--interactive-accent: #8a5cf5; --interactive-accent-hsl: 258, 88%, 66%; --text-accent: #a68af9;
+	--background-primary: #1e1e1e; --code-background: #262626; --background-modifier-border: #363636;
+	--text-normal: #dadada; --text-muted: #b3b3b3; --text-faint: #666;
+	--code-comment: #666; --code-keyword: #fa99cd; --code-string: #53dfdd; --code-function: #e0de71; --code-normal: #b3b3b3;
+}
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 20px; }
+body.is-mobile .cols { grid-template-columns: 375px; justify-content: center; }
+body.only-reading .cols { grid-template-columns: 1fr; max-width: 640px; }
+body.only-reading .cols > div:last-child, body.only-reading h2 { display: none; }
+h2 { font-size: 14px; color: var(--text-muted); margin: 0 0 8px; }
+.markdown-rendered pre { position: relative; background: var(--code-background); padding: 12px 16px; border-radius: 4px; margin: 0 0 16px; white-space: pre-wrap; overflow-x: auto; font-family: var(--font-monospace); font-size: var(--code-size); color: var(--code-normal); }
+.markdown-rendered code { font-family: var(--font-monospace); }
+.copy-code-button, .run-code-button { position: absolute; top: 6px; right: 6px; font-size: 11px; }
+.run-code-button { right: 56px; }
+/* Code Emitter 0.4 styles (relevant part) */
+.code-emitter-block { white-space: nowrap; min-height: 1.5rem; }
+.code-emitter-block .button-play { bottom: 4px; display: flex; padding: 4px 6px; position: absolute; inset-inline-end: 4px; font-style: normal; }
+.code-emitter-block hr.code-seprator { margin-top: 1em; margin-bottom: .5em; border: 0; border-top: 1px solid var(--background-modifier-border); }
+.code-emitter-block .code-output { white-space: nowrap; position: relative; font-size: .85em; min-height: 2em; }
+.code-emitter-block .code-output > ul { list-style: none; padding: 0; margin: 0; }
+.callout { border-left: 3px solid var(--interactive-accent); padding: 8px 12px; margin-bottom: 16px; background: hsla(var(--interactive-accent-hsl), .06); }
+.callout-title { font-weight: 600; margin-bottom: 6px; }
+.token.comment { color: var(--code-comment); }
+.token.keyword, .token.builtin { color: var(--code-keyword); }
+.token.string, .token.triple-quoted-string { color: var(--code-string); }
+.token.function { color: var(--code-function); }
+.markdown-source-view .HyperMD-codeblock { background-color: var(--code-background); font-family: var(--font-monospace); font-size: var(--code-size); padding-left: 16px; }
+.markdown-source-view .HyperMD-codeblock-begin { color: var(--text-faint); }
+</style>
+</head>
+<body>
+<div class="cols">
+	<div><h2>Reading view</h2><div id="reading" class="markdown-rendered"></div></div>
+	<div><h2>Live Preview</h2><div id="live" class="markdown-source-view mod-cm6 is-live-preview"></div></div>
+</div>
+<script src="bundle.js"></script>
+</body>
+</html>

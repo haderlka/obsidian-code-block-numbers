@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output — attached to GitHub releases, never committed
+main.js
+*.js.map
+
+# Obsidian plugin settings when the repo sits inside a vault
+data.json
+
+# Local tool settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Screenshot tool scratch output
+tools/harness/.build/

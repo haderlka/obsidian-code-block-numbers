@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "harness",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "http-server", "tools/harness/.build", "-p", "8137", "-c-1", "-s"],
+      "port": 8137
+    }
+  ]
+}
