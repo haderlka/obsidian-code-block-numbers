@@ -28,7 +28,8 @@ body {
 	border-radius: var(--code-radius, var(--radius-s)) var(--code-radius, var(--radius-s)) 0 0;
 	color: var(--cbn-title-color);
 	font-family: var(--font-monospace);
-	font-size: var(--font-smaller);
+	/* Same size as the code, and as the Live Preview title line (which inherits the code size). */
+	font-size: var(--code-size);
 	line-height: var(--line-height-tight);
 }
 
@@ -124,7 +125,10 @@ pre.cbn-numbered.cbn-numbered > code {
 .cbn-d5 { --cbn-digits: 5; }
 .cbn-d6 { --cbn-digits: 6; }
 
-.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-numbered {
+/* Obsidian's own rule `.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-list-line)`
+   sets padding-inline-start with the same specificity as a single-class selector here. The
+   doubled class makes this rule win whatever the stylesheet order (themes, snippets). */
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-numbered.cbn-lp-numbered {
 	--cbn-lp-gutter: calc(var(--cbn-digits, 1) * 1ch + var(--size-4-3) + var(--size-4-2));
 	position: relative;
 	padding-inline-start: calc(var(--cbn-lp-gutter) + var(--size-4-3));
@@ -138,6 +142,7 @@ pre.cbn-numbered.cbn-numbered > code {
 	inset-inline-start: 0;
 	box-sizing: border-box;
 	width: var(--cbn-lp-gutter);
+	padding-top: var(--cbn-lp-pad-top, 0px);
 	padding-inline-end: var(--size-4-2);
 	border-inline-end: 1px solid var(--cbn-separator);
 	color: var(--cbn-number-color);
@@ -147,18 +152,42 @@ pre.cbn-numbered.cbn-numbered > code {
 	user-select: none;
 }
 
+/* Marker and band are background layers anchored to the bottom, so they cover the text rows
+   but not the gap above the first line (--cbn-lp-pad-top). */
 .markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-highlight {
-	background-image: linear-gradient(var(--cbn-highlight-bg), var(--cbn-highlight-bg));
-	box-shadow: inset 3px 0 0 var(--cbn-highlight-edge);
+	background-image:
+		linear-gradient(var(--cbn-highlight-edge), var(--cbn-highlight-edge)),
+		linear-gradient(var(--cbn-highlight-bg), var(--cbn-highlight-bg));
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-size:
+		3px calc(100% - var(--cbn-lp-pad-top, 0px)),
+		100% calc(100% - var(--cbn-lp-pad-top, 0px));
 }
 
 .markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-numbered.cbn-lp-highlight::before {
 	color: var(--cbn-number-highlight-color);
 }
 
+/* The title on the opening fence line must look like .cbn-title (blocks another plugin renders
+   get that bar in Live Preview): same padding, line height and separator. The line already
+   has the code font size (Obsidian sets --code-size on .HyperMD-codeblock), so the text must
+   not be scaled down again. The geometry also applies while the cursor is in the block (the
+   raw fence shows then), so nothing jumps. */
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-title {
+	padding-block: var(--size-4-1);
+	border-bottom: 1px solid var(--cbn-separator);
+	line-height: var(--line-height-tight);
+}
+
+/* Same gap between the title bar and the first line as the pre's top padding in Reading view. */
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-first {
+	--cbn-lp-pad-top: var(--size-4-3);
+	padding-top: var(--cbn-lp-pad-top);
+}
+
 .markdown-source-view.mod-cm6 .cm-content > .cm-line.cbn-lp-title::before {
 	content: attr(data-cbn-title);
 	color: var(--cbn-title-color);
 	font-family: var(--font-monospace);
-	font-size: var(--font-smaller);
 }

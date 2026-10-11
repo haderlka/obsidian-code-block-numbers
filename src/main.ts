@@ -539,12 +539,11 @@ function livePreviewExtension(plugin: CodeBlockNumbersPlugin): Extension {
 					for (let i = Math.max(block.openLine, firstLine); i <= Math.min(block.closeLine, lastLine); i++) {
 						const line = doc.line(i + 1);
 						if (i === block.openLine) {
-							if (options.title !== "" && !editing) {
-								builder.add(
-									line.from,
-									line.from,
-									Decoration.line({ class: "cbn-lp-title", attributes: { "data-cbn-title": options.title } })
-								);
+							if (options.title !== "") {
+								// The line keeps its title-bar geometry while editing, so nothing jumps
+								// when the cursor enters the block. Only the title text is dropped then.
+								const attributes: Record<string, string> = editing ? {} : { "data-cbn-title": options.title };
+								builder.add(line.from, line.from, Decoration.line({ class: "cbn-lp-title", attributes }));
 							}
 							continue;
 						}
@@ -552,6 +551,8 @@ function livePreviewExtension(plugin: CodeBlockNumbersPlugin): Extension {
 
 						const label = options.start + (i - block.openLine - 1);
 						const classes = ["cbn-lp-line"];
+						// Same gap below the title bar as the pre's top padding in Reading view.
+						if (options.title !== "" && i === block.openLine + 1) classes.push("cbn-lp-first");
 						const attributes: Record<string, string> = {};
 						if (options.numbers) {
 							classes.push("cbn-lp-numbered", `cbn-d${digits}`);

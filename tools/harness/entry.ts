@@ -180,16 +180,25 @@ const fakeObsidianCodeLines = ViewPlugin.fromClass(
 			this.decorations = this.build(v);
 		}
 		update(u: ViewUpdate) {
-			if (u.docChanged) this.decorations = this.build(u.view);
+			if (u.docChanged || u.selectionSet) this.decorations = this.build(u.view);
 		}
 		build(v: EditorView) {
 			const b = new RangeSetBuilder<Decoration>();
+			const head = v.state.selection.main.head;
 			for (const blk of findFencedBlocks(v.state.doc.toString().split("\n"))) {
 				if (blk.quotePrefix) continue;
+				const from = v.state.doc.line(blk.openLine + 1).from;
+				const to = v.state.doc.line(blk.closeLine + 1).to;
+				const editing = head >= from && head <= to;
+				// The emitter block is a widget while not editing (see emitterWidgets).
+				if (isEmitterBlock(blk.info) && !editing) continue;
 				for (let i = blk.openLine; i <= blk.closeLine; i++) {
+					const isFence = i === blk.openLine || (blk.closed && i === blk.closeLine);
 					const cls = i === blk.openLine ? "HyperMD-codeblock HyperMD-codeblock-begin" : "HyperMD-codeblock";
 					const l = v.state.doc.line(i + 1);
 					b.add(l.from, l.from, Decoration.line({ class: cls }));
+					// Like Obsidian: the raw fence is only visible while the cursor is in the block.
+					if (isFence && !editing && l.to > l.from) b.add(l.from, l.to, Decoration.replace({}));
 				}
 			}
 			return b.finish();

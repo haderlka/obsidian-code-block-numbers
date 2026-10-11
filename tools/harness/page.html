@@ -54,8 +54,10 @@ pre:hover > .copy-code-button, pre:hover > .run-code-button { opacity: 1; }
 .token.keyword, .token.builtin { color: var(--code-keyword); }
 .token.string, .token.triple-quoted-string { color: var(--code-string); }
 .token.function { color: var(--code-function); }
-.markdown-source-view .HyperMD-codeblock { background-color: var(--code-background); font-family: var(--font-monospace); font-size: var(--code-size); padding-left: 16px; }
-.markdown-source-view .HyperMD-codeblock-begin { color: var(--text-faint); }
+/* Obsidian 1.14 rules for Live Preview code lines (extracted from the app's CSS) */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock { color: var(--code-normal); background-color: var(--code-background); font-family: var(--font-monospace); font-size: var(--code-size); }
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-list-line) { padding-inline-start: var(--size-4-4); }
+.markdown-source-view.mod-cm6 .cm-preview-code-block pre { margin: 0; }
 </style>
 </head>
 <body>
